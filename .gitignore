@@ -2,3 +2,6 @@ __pycache__/
 *.ckpt
 *.pyc
 checkpoints/
+
+.dream2nix
+.matplotlib

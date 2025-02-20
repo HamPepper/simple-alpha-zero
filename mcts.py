@@ -49,11 +49,11 @@ class MCTS():
         else: # Expand
             w = self.game.check_winner(s)
             if w is not None: # Reached a terminal node
-                return 1 if w is not -1 else 0, w # Someone won, or tie
+                return 1 if w != -1 else 0, w # Someone won, or tie
             available_actions = self.game.get_available_actions(s)
             idx = np.stack(np.where(available_actions)).T
             p, v = self.nn.predict(s)
-            stats = np.zeros((len(idx), 4), dtype=np.object)
+            stats = np.zeros((len(idx), 4), dtype=object)
             stats[:,-1] = p
             stats[:,0] = list(idx)
             self.tree[hashed_s] = stats
@@ -72,7 +72,7 @@ class MCTS():
         except (ZeroDivisionError, OverflowError):
             raised = np.zeros_like(N)
             raised[N.argmax()] = 1
-        
+
         total = raised.sum()
         # If all children are unexplored, prior is uniform.
         if total == 0:
@@ -81,5 +81,5 @@ class MCTS():
         dist = raised/total
         stats[:,1] = dist
         return stats
-        
+
 

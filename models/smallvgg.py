@@ -26,7 +26,7 @@ class SmallVGG(Model):
     # Network
     relu_conv1 = F.relu(self.conv1(x))
     relu_conv2 = F.relu(self.conv2(relu_conv1))
-    flat = relu_conv2.view(batch_size, -1)
+    flat = torch.flatten(relu_conv2, start_dim=1)
 
     # Outputs
     p_logits = self.p_head(flat).view(this_output_shape)

@@ -30,7 +30,7 @@ class Trainer:
         data = []
         w = None
         while w is None:
-            
+
             # Think
             for _ in range(self.num_simulations):
                 tree.simulate(s, cpuct=self.cpuct)
@@ -40,7 +40,7 @@ class Trainer:
             data.append([self.game.get_player(s), s, dist[:,1], None]) # player, state, prob, outcome
 
             # Sample an action
-            idx = np.random.choice(len(dist), p=dist[:,1].astype(np.float))
+            idx = np.random.choice(len(dist), p=dist[:,1].astype(float))
             a = tuple(dist[idx, 0])
 
             # Apply action
@@ -53,7 +53,7 @@ class Trainer:
             w = self.game.check_winner(s)
 
         # Update training examples with outcome
-        data = np.array(data)
+        data = np.array(data, dtype=object)
         if w == -1:
             data[:,-1] = 0
         else:
@@ -66,7 +66,7 @@ class Trainer:
     # Performs one iteration of policy improvement.
     # Creates some number of games, then updates network parameters some number of times from that training data.
     def policy_iteration(self, verbose=False):
-        temperature = 1   
+        temperature = 1
 
         if verbose:
             print("SIMULATING " + str(self.num_games) + " games")

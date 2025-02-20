@@ -64,13 +64,13 @@ class NeuralNetwork():
             s = states[i]
             logits = p_pred[i]
             pred = self.get_valid_dist(s, logits, log_softmax=True)
-            p_loss += -torch.sum(gt*pred)            
+            p_loss += -torch.sum(gt*pred)
         return p_loss + v_loss
 
 
     # Takes one state and logit set as input, produces a softmax/log_softmax over the valid actions.
     def get_valid_dist(self, s, logits, log_softmax=False):
-        mask = torch.from_numpy(self.game.get_available_actions(s).astype(np.uint8))
+        mask = torch.from_numpy(self.game.get_available_actions(s).astype(np.uint8)).bool()
         if self.cuda:
             mask = mask.cuda()
         selection = torch.masked_select(logits, mask)

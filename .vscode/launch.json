@@ -1,14 +1,25 @@
 {
     "configurations": [
         {
-            "name": "main-connect4-cpu",
-            "type": "python",
+            "name": "connect4-cpu",
+            "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
                 "${workspaceFolder}/configs/connect4-cpu.json"
+            ]
+        },
+        {
+            "name": "connect4-gpu",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "${workspaceFolder}/configs/connect4-gpu.json"
             ]
         }
     ],

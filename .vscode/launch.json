@@ -21,6 +21,30 @@
             "args": [
                 "${workspaceFolder}/configs/connect4-gpu.json"
             ]
+        },
+        {
+            "name": "connect4-export",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/export-import.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "${workspaceFolder}/configs/connect4-cpu.json",
+                "export"
+            ]
+        },
+        {
+            "name": "connect4-import",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/export-import.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "${workspaceFolder}/configs/connect4-cpu.json",
+                "import"
+            ]
         }
     ],
     "version": "2.0.0"

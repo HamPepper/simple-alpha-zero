@@ -53,6 +53,8 @@ class MCTS():
             available_actions = self.game.get_available_actions(s)
             idx = np.stack(np.where(available_actions)).T
             p, v = self.nn.predict(s)
+
+            # NOTE: the shape is NOT (7, .) because we only save info for legal actions
             stats = np.zeros((len(idx), 4), dtype=object)
             stats[:,-1] = p
             stats[:,0] = list(idx)

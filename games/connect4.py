@@ -12,12 +12,12 @@ class Connect4(Game):
     def get_initial_state(self):
         return np.zeros((6, 7, 2 + 1), dtype=np.float32) # Final plane is a turn indicator
 
-    # Returns a 7-item boolean array indicating open slots. 
+    # Returns a 7-item boolean array indicating open slots.
     def get_available_actions(self, s):
         pieces = s[:, :, :2].sum(axis=-1)
         counts = pieces.sum(axis=0)
         return counts != 6
-        
+
     # Drop a red or yellow piece in a slot.
     def take_action(self, s, a):
         p = self.get_player(s)
@@ -51,7 +51,7 @@ class Connect4(Game):
 
     # Print a human-friendly visualization of the board.
     def visualize(self, s):
-        board = np.ones((6,7)).astype(np.object)
+        board = np.ones((6,7)).astype(object)
         board[:,:] = "_"
         board[s[:,:,0] == 1] = 'x'
         board[s[:,:,1] == 1] = 'o'

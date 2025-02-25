@@ -23,6 +23,19 @@ from neural_network import NeuralNetwork
 from trainer import Trainer
 
 
+def pad_pi(game, s, pi):
+    legal_actions = game.get_available_actions(s)
+    padded = np.zeros(7)
+
+    padded[legal_actions] = pi
+    return padded
+
+
+def unpad_pi(game, s, pi):
+    legal_actions = game.get_available_actions(s)
+    return pi[legal_actions]
+
+
 # Load in a run configuration
 with open(sys.argv[1], "r") as f:
     config = json.loads(f.read())
@@ -52,6 +65,11 @@ if mode == "import":
     print("IMPORTING")
     with open("export/training_data.pkl", "rb") as file:
         data = pickle.load(file)
+
+    for data_in_single_sim_batch in data:
+        for tmp in data_in_single_sim_batch:
+            s, pi, _ = tmp
+            tmp[1] = unpad_pi(game, s, pi)
 
     print("TRAINING")
     examples = []
@@ -86,6 +104,11 @@ elif mode == "export":
 
         # save games generated in this iteration
         data_in_single_sim_batch = trainer.training_data[last_idx:].tolist()
+
+        for tmp in data_in_single_sim_batch:
+            s, pi, _ = tmp
+            tmp[1] = pad_pi(game, s, pi)
+
         data.append(data_in_single_sim_batch)
         last_idx = len(trainer.training_data)
 
